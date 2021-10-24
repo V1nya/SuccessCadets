@@ -1,10 +1,11 @@
 package com.example.SuccessCadets.faculty;
 
-public class Cadet {
+public class Cadet  {
     String name;
     int progress;
     int grade;
 
+    public Cadet(){}
     public Cadet(String name, int progress, int grade) {
         this.name = name;
         this.progress = progress;
@@ -13,6 +14,14 @@ public class Cadet {
 
     public String getName() {
         return name;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Cadet: " + name +
+                ", progress: " + progress +
+                ", grade: " + grade;
     }
 
     public void setName(String name) {
@@ -34,4 +43,6 @@ public class Cadet {
     public void setGrade(int grade) {
         this.grade = grade;
     }
+
+
 }
