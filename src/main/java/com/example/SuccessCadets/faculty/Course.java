@@ -8,6 +8,7 @@ public class Course {
     int num;
     int middle_grade_of_course;
     int progress_course;
+    
 
     public List<Group> getGroups() {
         return groups;
