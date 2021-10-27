@@ -2,9 +2,10 @@ package com.example.SuccessCadets.servise;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 
 public interface GoogleSheetsService {
-    void getSpreadsheetValues() throws IOException, GeneralSecurityException;
-    String getSheetValues() throws IOException, GeneralSecurityException;
+    List<List<Object>> getSpreadsheetValues() throws IOException, GeneralSecurityException;
+
 
 }
