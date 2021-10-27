@@ -12,35 +12,13 @@ public class Group {
     double middle_grade_of_group;
     double progress_group;
 
-    public Group(int number, double middle_grade_of_group) {
-        this.number = number;
-        this.middle_grade_of_group = middle_grade_of_group;
-    }
-
     public Group(){}
-    public Group(int number, int middle_grade_of_group) {
+
+    public Group(int number, List<Cadet> cadets, double middle_grade_of_group) {
         this.number = number;
-        this.middle_grade_of_group = middle_grade_of_group;
-
+        this.cadets = cadets;
+        this.middle_grade_of_group = middle_gr_group();
     }
-
-
-    public int middle_gr_group(){
-       int notes =0;
-       for(int i=0; i<cadets.size(); i++){
-           notes+=cadets.get(i).grade;
-       }
-       int middle = notes/cadets.size();
-       return middle;
-    }
-
-
-    public List<Cadet> top_cadets(){
-
-        List<Cadet> groups1 =  (List<Cadet>)cadets.stream().sorted((o1, o2) -> (int) (o2.getGrade()-o1.getGrade())).limit(5).collect(Collectors.toList());
-        return groups1;
-    }
-
 
 
     public List<Cadet> getCadets() {
@@ -74,7 +52,21 @@ public class Group {
     public void setProgress(double progress) {
         this.progress_group = progress_group;
     }
+    public int middle_gr_group(){
+        int notes =0;
+        for(int i=0; i<cadets.size(); i++){
+            notes+=cadets.get(i).grade;
+        }
+        int middle = notes/cadets.size();
+        return middle;
+    }
 
+
+    public List<Cadet> top_cadets(){
+
+        List<Cadet> groups1 =  (List<Cadet>)cadets.stream().sorted((o1, o2) -> (int) (o2.getGrade()-o1.getGrade())).limit(5).collect(Collectors.toList());
+        return groups1;
+    }
 
 }
 
