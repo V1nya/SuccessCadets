@@ -14,7 +14,7 @@ public class Group {
 
     public Group(){}
 
-    public Group(int number, List<Cadet> cadets, double middle_grade_of_group) {
+    public Group(int number, List<Cadet> cadets) {
         this.number = number;
         this.cadets = cadets;
         this.middle_grade_of_group = middle_gr_group();
@@ -52,12 +52,12 @@ public class Group {
     public void setProgress(double progress) {
         this.progress_group = progress_group;
     }
-    public int middle_gr_group(){
+    public double middle_gr_group(){
         int notes =0;
         for(int i=0; i<cadets.size(); i++){
             notes+=cadets.get(i).grade;
         }
-        int middle = notes/cadets.size();
+         double middle = notes/cadets.size();
         return middle;
     }
 

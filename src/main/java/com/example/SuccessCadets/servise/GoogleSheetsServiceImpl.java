@@ -1,6 +1,9 @@
 package com.example.SuccessCadets.servise;
 
 import com.example.SuccessCadets.config.GoogleAuthorizationConfig;
+import com.example.SuccessCadets.faculty.Cadet;
+import com.example.SuccessCadets.faculty.Course;
+import com.example.SuccessCadets.faculty.Group;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.BatchGetValuesResponse;
 import org.slf4j.Logger;
@@ -26,14 +29,29 @@ public class GoogleSheetsServiceImpl implements GoogleSheetsService {
     private GoogleAuthorizationConfig googleAuthorizationConfig;
 
     @Override
-    public List<List<Object>> getSpreadsheetValues() throws IOException, GeneralSecurityException {
+    public Course getSpreadsheetValues() throws IOException, GeneralSecurityException {
         Sheets sheetsService = googleAuthorizationConfig.getSheetsService();
         Sheets.Spreadsheets.Values.BatchGet request =
                 sheetsService.spreadsheets().values().batchGet(spreadsheetId);
         request.setRanges(getRange());
         BatchGetValuesResponse response = request.execute();
+        Course course = new Course();
+        List<Group> groups = new ArrayList<>();
+        for (int i =0;i<response.size();i++){
+            List<List<Object>> spreadSheetValues = response.getValueRanges().get(i).getValues();
+            List<Cadet> cadets = new ArrayList<>();
+            for (List<Object> cad:spreadSheetValues) {
+                Cadet cadet = new Cadet((String) cad.get(0),Integer.parseInt((String)cad.get(1)));
+                cadets.add(cadet);
+            }
+            groups.add(new Group(201,cadets));
+        }
+        course.setGroups(groups);
+        course.setNum(20);
         List<List<Object>> spreadSheetValues = response.getValueRanges().get(1).getValues();
-        return spreadSheetValues;
+
+        int i =0;
+        return course;
     }
 
 

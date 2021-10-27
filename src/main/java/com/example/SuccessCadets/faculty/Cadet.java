@@ -5,21 +5,12 @@ public class Cadet {
     int progress;
     double grade;
 
-    @Override
-    public String toString() {
-        return "Cadet{" +
-                "name='" + name + '\'' +
-                ", progress=" + progress +
-                ", grade=" + grade +
-                '}';
-    }
 
     public Cadet() {
     }
 
-    public Cadet(String name, int progress, double grade) {
+    public Cadet(String name, double grade) {
         this.name = name;
-        this.progress = progress;
         this.grade = grade;
     }
 
