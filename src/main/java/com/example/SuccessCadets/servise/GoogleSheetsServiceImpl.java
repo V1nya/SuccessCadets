@@ -3,8 +3,6 @@ package com.example.SuccessCadets.servise;
 import com.example.SuccessCadets.config.GoogleAuthorizationConfig;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.BatchGetValuesResponse;
-import com.google.api.services.sheets.v4.model.Sheet;
-import com.google.api.services.sheets.v4.model.Spreadsheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +30,9 @@ public class GoogleSheetsServiceImpl implements GoogleSheetsService {
         Sheets sheetsService = googleAuthorizationConfig.getSheetsService();
         Sheets.Spreadsheets.Values.BatchGet request =
                 sheetsService.spreadsheets().values().batchGet(spreadsheetId);
-        request.setRanges(getSpreadSheetRange(1));
+        request.setRanges(getSpreadSheetRange());
         BatchGetValuesResponse response = request.execute();
         List<List<Object>> spreadSheetValues = response.getValueRanges().get(1).getValues();
-//        List<Object> headers = spreadSheetValues.remove(0);
-
         int k=0;
 
     }
@@ -48,7 +44,7 @@ public class GoogleSheetsServiceImpl implements GoogleSheetsService {
         Sheets sheetsService = googleAuthorizationConfig.getSheetsService();
         Sheets.Spreadsheets.Values.BatchGet request =
                 sheetsService.spreadsheets().values().batchGet(spreadsheetId);
-        request.setRanges(getSpreadSheetRange(1));
+        request.setRanges(getSpreadSheetRange());
 //        request.setMajorDimension("COLUMNS");
         BatchGetValuesResponse response = request.execute();
         List<List<Object>> spreadSheetValues = response.getValueRanges().get(1).getValues();
@@ -57,16 +53,11 @@ public class GoogleSheetsServiceImpl implements GoogleSheetsService {
         return (String) headers.get(0);
     }
 
-    private List<String> getSpreadSheetRange(int indexPage) throws IOException, GeneralSecurityException {
-        Sheets sheetsService = googleAuthorizationConfig.getSheetsService();
-        Sheets.Spreadsheets.Get request = sheetsService.spreadsheets().get(spreadsheetId);
-        Spreadsheet spreadsheet = request.execute();
-        Sheet sheet = spreadsheet.getSheets().get(indexPage);
-
+    private List<String> getSpreadSheetRange() throws IOException, GeneralSecurityException {
         List<String> res = new ArrayList<>();
-        res.add("A1:B30");
-        res.add("A1:B30");
-
+        res.add("201!A2:B30");
+        res.add("202!A2:B30");
+        res.add("203!A2:B30");
         return res;
     }
 }
