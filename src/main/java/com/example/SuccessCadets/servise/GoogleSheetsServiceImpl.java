@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,27 +32,41 @@ public class GoogleSheetsServiceImpl implements GoogleSheetsService {
         Sheets sheetsService = googleAuthorizationConfig.getSheetsService();
         Sheets.Spreadsheets.Values.BatchGet request =
                 sheetsService.spreadsheets().values().batchGet(spreadsheetId);
-        request.setRanges(getSpreadSheetRange());
-        request.setMajorDimension("ROWS");
+        request.setRanges(getSpreadSheetRange(1));
         BatchGetValuesResponse response = request.execute();
-        List<List<Object>> spreadSheetValues = response.getValueRanges().get(0).getValues();
-        List<Object> headers = spreadSheetValues.remove(0);
-        for ( List<Object> row : spreadSheetValues ) {
-            LOGGER.info("{}: {}, {}: {}, {}: {}, {}: {}",
-                    headers.get(0),row.get(0), headers.get(1),row.get(1),
-                    headers.get(2),row.get(2), headers.get(3),row.get(3));
-        }
-        int i =0;
+        List<List<Object>> spreadSheetValues = response.getValueRanges().get(1).getValues();
+//        List<Object> headers = spreadSheetValues.remove(0);
+
+        int k=0;
+
     }
 
-    private List<String> getSpreadSheetRange() throws IOException, GeneralSecurityException {
+    @Override
+    public String getSheetValues() throws IOException, GeneralSecurityException {
+        String res ="+";
+        int k=1;
+        Sheets sheetsService = googleAuthorizationConfig.getSheetsService();
+        Sheets.Spreadsheets.Values.BatchGet request =
+                sheetsService.spreadsheets().values().batchGet(spreadsheetId);
+        request.setRanges(getSpreadSheetRange(1));
+//        request.setMajorDimension("COLUMNS");
+        BatchGetValuesResponse response = request.execute();
+        List<List<Object>> spreadSheetValues = response.getValueRanges().get(1).getValues();
+        List<Object> headers = spreadSheetValues.remove(0);
+        k=0;
+        return (String) headers.get(0);
+    }
+
+    private List<String> getSpreadSheetRange(int indexPage) throws IOException, GeneralSecurityException {
         Sheets sheetsService = googleAuthorizationConfig.getSheetsService();
         Sheets.Spreadsheets.Get request = sheetsService.spreadsheets().get(spreadsheetId);
         Spreadsheet spreadsheet = request.execute();
-        Sheet sheet = spreadsheet.getSheets().get(0);
-        int row = sheet.getProperties().getGridProperties().getRowCount();
-        int col = sheet.getProperties().getGridProperties().getColumnCount();
-        return Collections.singletonList("R1C1:R".concat(String.valueOf(row))
-                .concat("C").concat(String.valueOf(col)));
+        Sheet sheet = spreadsheet.getSheets().get(indexPage);
+
+        List<String> res = new ArrayList<>();
+        res.add("A1:B30");
+        res.add("A1:B30");
+
+        return res;
     }
 }

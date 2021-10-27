@@ -1,7 +1,7 @@
 package com.example.SuccessCadets.controls;
 
 
-import com.example.SuccessCadets.servise.GoogleSheetsService;
+import com.example.SuccessCadets.servise.GoogleSheetsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,13 +15,17 @@ import java.security.GeneralSecurityException;
 public class GoogleSheetsController {
 
     @Autowired
-    private GoogleSheetsService googleSheetsService;
+    private GoogleSheetsServiceImpl googleSheetsService = new GoogleSheetsServiceImpl();
+
 
     @GetMapping("/")
     public String getSpreadsheetValues() throws IOException, GeneralSecurityException {
-        googleSheetsService.getSpreadsheetValues();
+       googleSheetsService.getSpreadsheetValues();
 
-        int g =0;
+
+
+//        return googleSheetsService.getSheetValues();
         return "OK";
     }
+
 }
