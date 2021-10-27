@@ -1,12 +1,14 @@
 package com.example.SuccessCadets.faculty;
 
-public class Cadet  {
+public class Cadet {
     String name;
     int progress;
-    int grade;
+    double grade;
 
-    public Cadet(){}
-    public Cadet(String name, int progress, int grade) {
+    public Cadet() {
+    }
+
+    public Cadet(String name, int progress, double grade) {
         this.name = name;
         this.progress = progress;
         this.grade = grade;
@@ -14,14 +16,6 @@ public class Cadet  {
 
     public String getName() {
         return name;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Cadet: " + name +
-                ", progress: " + progress +
-                ", grade: " + grade;
     }
 
     public void setName(String name) {
@@ -36,13 +30,11 @@ public class Cadet  {
         this.progress = progress;
     }
 
-    public int getGrade() {
+    public double getGrade() {
         return grade;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(double grade) {
         this.grade = grade;
     }
-
-
 }

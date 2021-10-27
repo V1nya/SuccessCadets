@@ -1,19 +1,23 @@
 package com.example.SuccessCadets.faculty;
 
-import com.example.SuccessCadets.controls.MainControls;
+//import com.example.SuccessCadets.controls.MainControls;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Group {
 
-   private int number;
-   private List<Cadet> cadets= new ArrayList<Cadet>(){};
-   private int middle_grade_of_group;
-   private int progress_group;
+    int number;
+    List<Cadet> cadets= new ArrayList<Cadet>(){};
+    double middle_grade_of_group;
+    double progress_group;
 
+    public Group(int number, double middle_grade_of_group) {
+        this.number = number;
+        this.middle_grade_of_group = middle_grade_of_group;
+    }
 
-   public Group(){}
+    public Group(){}
     public Group(int number, int middle_grade_of_group) {
         this.number = number;
         this.middle_grade_of_group = middle_grade_of_group;
@@ -30,11 +34,13 @@ public class Group {
        return middle;
     }
 
+
     public List<Cadet> top_cadets(){
 
-       List<Cadet> ca=  (List<Cadet>) cadets.stream().sorted((o1, o2) -> o2.getGrade()- o1.getGrade()).limit(15).collect(Collectors.toList());
-       return ca;
+        List<Cadet> groups1 =  (List<Cadet>)cadets.stream().sorted((o1, o2) -> (int) (o2.getGrade()-o1.getGrade())).limit(5).collect(Collectors.toList());
+        return groups1;
     }
+
 
 
     public List<Cadet> getCadets() {
@@ -53,19 +59,19 @@ public class Group {
         this.number = number;
     }
 
-    public int getMiddle_grade() {
+    public double getMiddle_grade() {
         return middle_grade_of_group;
     }
 
-    public void setMiddle_grade(int middle_grade) {
+    public void setMiddle_grade(double middle_grade) {
         this.middle_grade_of_group = middle_grade_of_group;
     }
 
-    public int getProgress() {
+    public double getProgress() {
         return progress_group;
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(double progress) {
         this.progress_group = progress_group;
     }
 
