@@ -6,8 +6,6 @@ import com.example.SuccessCadets.faculty.Course;
 import com.example.SuccessCadets.faculty.Group;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.BatchGetValuesResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,7 +18,7 @@ import java.util.List;
 @Service
 public class GoogleSheetsServiceImpl implements GoogleSheetsService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GoogleSheetsServiceImpl.class);
+    private String[] listInSheet = new String[]{"201","202","203"};
 
     @Value("15lFfOpJUcCtQo8GkGGPw6RZKgtKdiLSDc-3dC4yuiIA")
     private String spreadsheetId;
@@ -29,38 +27,73 @@ public class GoogleSheetsServiceImpl implements GoogleSheetsService {
     private GoogleAuthorizationConfig googleAuthorizationConfig;
 
     @Override
-    public Course getSpreadsheetValues() throws IOException, GeneralSecurityException {
+    public List<Course> getSpreadsheetValues() throws IOException, GeneralSecurityException {
         Sheets sheetsService = googleAuthorizationConfig.getSheetsService();
         Sheets.Spreadsheets.Values.BatchGet request =
                 sheetsService.spreadsheets().values().batchGet(spreadsheetId);
         request.setRanges(getRange());
         BatchGetValuesResponse response = request.execute();
-        Course course = new Course();
+        List<Course> courses = new ArrayList<>();
         List<Group> groups = new ArrayList<>();
-        for (int i =0;i<response.size();i++){
+        for (int i =0;i<response.size()+1;i++){
             List<List<Object>> spreadSheetValues = response.getValueRanges().get(i).getValues();
             List<Cadet> cadets = new ArrayList<>();
             for (List<Object> cad:spreadSheetValues) {
-                Cadet cadet = new Cadet((String) cad.get(0),Integer.parseInt((String)cad.get(1)));
-                cadets.add(cadet);
+                if(cad.get(1)!=null) {
+                    Cadet cadet = new Cadet((String) cad.get(0),parseDouble((String) cad.get(1)));
+                    cadets.add(cadet);
+                }
             }
-            groups.add(new Group(201,cadets));
-        }
-        course.setGroups(groups);
-        course.setNum(20);
-        List<List<Object>> spreadSheetValues = response.getValueRanges().get(1).getValues();
+            if (response.size()>=i+1 && !listInSheet[i+1].substring(0,listInSheet[i+1].length()-1).equals( listInSheet[i].substring(0,listInSheet.length-1))){
+                groups.add(new Group(Integer.parseInt(listInSheet[i]), cadets));
+                List<Group> groupss = new ArrayList<>();
+                for (Group gr:groups
+                     ) {
+                    groupss.add(gr);
 
-        int i =0;
-        return course;
+                }
+                courses.add(new Course(groupss,listInSheet[i].substring(0,listInSheet.length-1)));
+                groups.clear();
+            }else if (i==response.size()){
+                groups.add(new Group(Integer.parseInt(listInSheet[i]), cadets));
+                List<Group> groupss = new ArrayList<>();
+                for (Group gr:groups
+                ) {
+                    groupss.add(gr);
+
+                }
+                courses.add(new Course(groupss,listInSheet[i].substring(0,listInSheet.length-1)));
+                groups.clear();
+            }
+            else{
+                groups.add(new Group(Integer.parseInt(listInSheet[i]), cadets));
+            }
+        }
+
+        int i=0;
+        return courses;
     }
 
+    private double parseDouble(String text){
+        String newStr = "";
+        var chars = text.toCharArray();
+        for (char ch:chars) {
+            if (ch==',')
+                newStr+='.';
+            else
+                newStr+=ch;
+        }
 
+        return Double.parseDouble(newStr);
+    }
 
     private List<String> getRange() throws IOException, GeneralSecurityException {
         List<String> res = new ArrayList<>();
-        res.add("201!A2:B30");
-        res.add("202!A2:B30");
-        res.add("203!A2:B30");
+        for (String group:listInSheet
+             ) {
+
+        res.add(group+"!A2:B30");
+        }
         return res;
     }
 }

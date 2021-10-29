@@ -6,11 +6,16 @@ import java.util.stream.Collectors;
 
 public class Course {
     List<Group> groups = new ArrayList<Group>();
-    int num;
+    String num;
     double middle_grade_of_course;
     double progress_course;
 
+    public Course(List<Group> groups, String num) {
+        this.groups = groups;
+        this.num = num;
+    }
 
+    public Course(){}
 
     public List<Group> getGroups() {
         return groups;
@@ -22,11 +27,11 @@ public class Course {
         this.middle_grade_of_course=middle_gr_course();
     }
 
-    public int getNum() {
+    public String getNum() {
         return num;
     }
 
-    public void setNum(int num) {
+    public void setNum(String num) {
         this.num = num;
     }
 
@@ -43,11 +48,13 @@ public class Course {
     }
 
     public double middle_gr_course(){
-        int notes =0;
+        double notes =0;
         for(int i=0; i<groups.size(); i++){
             notes+=groups.get(i).middle_gr_group();
         }
         double middle = notes/groups.size();
+        middle =Double.parseDouble(String.format("%.2f",middle).substring(0,2)+"."+String.format("%.2f",middle).substring(3)) ;
+
         return middle;
     }
 

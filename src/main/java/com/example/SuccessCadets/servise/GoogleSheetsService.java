@@ -4,9 +4,10 @@ import com.example.SuccessCadets.faculty.Course;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 
 public interface GoogleSheetsService {
-    Course getSpreadsheetValues() throws IOException, GeneralSecurityException;
+    List<Course> getSpreadsheetValues() throws IOException, GeneralSecurityException;
 
 
 }

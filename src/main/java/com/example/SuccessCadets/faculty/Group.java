@@ -52,12 +52,15 @@ public class Group {
     public void setProgress(double progress) {
         this.progress_group = progress_group;
     }
-    public double middle_gr_group(){
-        int notes =0;
+    public double
+    middle_gr_group(){
+        double notes =0;
         for(int i=0; i<cadets.size(); i++){
             notes+=cadets.get(i).grade;
         }
          double middle = notes/cadets.size();
+        middle =Double.parseDouble(String.format("%.2f",middle).substring(0,2)+"."+String.format("%.2f",middle).substring(3)) ;
+
         return middle;
     }
 
