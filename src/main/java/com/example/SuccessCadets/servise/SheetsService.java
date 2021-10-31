@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GoogleSheetsServiceImpl implements GoogleSheetsService {
+public class SheetsService implements GoogleSheetsService {
 
     private String[] listInSheet = new String[]{"201","202","203"};
 

@@ -18,7 +18,7 @@ public class MainController {
 
         return "homePage";
     }
-    @GetMapping("/getCadet")
+    @GetMapping("/topCadet")
     public String topCadet(Model model){
         this.i++;
         model.addAttribute("data", LocalDateTime.now());

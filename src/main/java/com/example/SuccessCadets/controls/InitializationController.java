@@ -1,8 +1,7 @@
 package com.example.SuccessCadets.controls;
 
 
-import com.example.SuccessCadets.logics.Start;
-import com.example.SuccessCadets.servise.GoogleSheetsServiceImpl;
+import com.example.SuccessCadets.servise.SheetsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +15,14 @@ import java.security.GeneralSecurityException;
 public class InitializationController {
 
     @Autowired
-    private GoogleSheetsServiceImpl googleSheetsService = new GoogleSheetsServiceImpl();
+    private SheetsService googleSheetsService = new SheetsService();
 
-    private Start start = new Start();
 
     @GetMapping("/start")
     public String startProject() throws GeneralSecurityException, IOException {
 //        googleSheetsService.getSpreadsheetValues();
 
-        googleSheetsService.initTopCadet();
+//        googleSheetsService.initTopCadet();
         return "OK";
     }
 
