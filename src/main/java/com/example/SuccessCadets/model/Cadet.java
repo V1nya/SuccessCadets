@@ -25,6 +25,9 @@ public class Cadet {
     }
 
 
+    public String getGr() {
+        return gr;
+    }
 
     public String getCourse() {
         return course;

@@ -1,7 +1,6 @@
 package com.example.SuccessCadets.servise;
 
 import com.example.SuccessCadets.config.GoogleAuthorizationConfig;
-import com.example.SuccessCadets.logics.SequenceOfCourses;
 import com.example.SuccessCadets.model.Cadet;
 import com.example.SuccessCadets.model.TopCadets;
 import com.example.SuccessCadets.repo.CadetRepository;
@@ -20,7 +19,7 @@ import java.util.List;
 @Service
 public class SheetsService implements GoogleSheetsService {
 
-    private String[] listInSheet = new String[]{"201","202","203"};
+    private String[] listInSheet = new String[]{"201","212","293"};
 
     @Value("15lFfOpJUcCtQo8GkGGPw6RZKgtKdiLSDc-3dC4yuiIA")
     private String spreadsheetId;
@@ -35,7 +34,6 @@ public class SheetsService implements GoogleSheetsService {
     TopCadetsRepository topCadetsRepository;
 
     public void initTopCadet()  {
-        topCadetsRepository.deleteAll();
        topCadetsRepository.save(new TopCadets("name","v","21",7.5));
         var topCadetCourse= topCadetsRepository.findAll();
         var cadets = cadetRepository.findAll();
@@ -43,7 +41,7 @@ public class SheetsService implements GoogleSheetsService {
         List<Cadet> newTopCourse = new ArrayList<>();
         for (Cadet cad:cadets) {
             if (topCadetCourse.size()!=0){
-                String nextCourse =SequenceOfCourses.getNextCourse(topCadetCourse.get(0).getCourse());
+                String nextCourse =getNextCourse(topCadetCourse.get(0).getCourse());
                if (cad.getCourse().equals(nextCourse)){
                     newTopCourse.add(cad);
                 }
@@ -69,6 +67,7 @@ public class SheetsService implements GoogleSheetsService {
 
     @Override
     public void getSpreadsheetValues() throws IOException, GeneralSecurityException {
+        cadetRepository.deleteAll();
         Sheets sheetsService = googleAuthorizationConfig.getSheetsService();
         Sheets.Spreadsheets.Values.BatchGet request =
                 sheetsService.spreadsheets().values().batchGet(spreadsheetId);
@@ -126,8 +125,36 @@ public class SheetsService implements GoogleSheetsService {
 //
 //        int i=0;
 //        return courses;
-    }
 
+
+    }
+    public  String getNextCourse(String course) {
+        List<String> sequence = new ArrayList<>();
+        for (String str :listInSheet) {
+            String curs = str.substring(0,2);
+            int i =0;
+            for (String sht:sequence) {
+                if (sht.equals(curs)){
+                    i++;
+                }
+            }
+            if (i==0){
+                sequence.add(curs);
+            }
+        }
+
+        for (int i = 0;i<sequence.size();i++) {
+            if (i+1== sequence.size()){
+                return sequence.get(0);
+            }
+            else {
+                if (sequence.get(i).equals(course)){
+                    return sequence.get(i+1);
+                }
+            }
+        }
+        return "20";
+    }
     private double parseDouble(String text){
         String newStr = "";
         var chars = text.toCharArray();

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -5,10 +6,14 @@
     <title>Title</title>
 </head>
 <body>
-<div  class="alert alert-into nt-2">
-    <h3 th:text ="${data}"/>
+<h1>th:each</h1>
+<ul>
+    <th:block th:each="flower : ${flowers}">
+        <div th:if="${flowers} ? 'Lily':'MM' ">
+        <li th:utext="${flower}">..</li>
+        </div>
 
-
-</div>
+    </th:block>
+</ul>
 </body>
 </html>

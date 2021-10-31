@@ -15,7 +15,7 @@
 //@EnableSwagger2
 //public class SwaggerConfig {
 //
-//    @Value("${enable.swagger.ui}")
+//    @Value("true")
 //    private boolean enableSwagger;
 //
 //    private ApiInfo info() {
