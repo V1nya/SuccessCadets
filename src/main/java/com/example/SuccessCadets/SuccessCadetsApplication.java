@@ -1,6 +1,5 @@
 package com.example.SuccessCadets;
 
-import com.example.SuccessCadets.faculty.Group;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

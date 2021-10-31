@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class OlgaController {
     @GetMapping("/cadet")
-    public String cadet(){return "topCadets";}
+    public String cadet(){return "index";}
 }
