@@ -33,15 +33,14 @@
 
             <td class="name"> <p th:utext="${cadet.getName}"> </td>
 
-            <td> <p th:utext="${cadet.getGr}"> </td>
+            <td> <p th:utext="$.getGr}"> </td>
 
             <td> <p th:utext="${cadet.getGrade}"> </td>
 
-            <div th:switch="${cadet.getProgress}">
-                <td th:case="0" class="stay" > - </td>
-                <td th:case="1" class="up" > ↑ </td>
-                <td th:case="-1" class="down" > ↓ </td>
-            </div>
+<!--            <div th:if="${cadet.getProgress > '0'}">-->
+            <td  class="stay"  th:if="${cadet.getProgress == 0}" > -</td>
+            <td class="up"  th:if="${cadet.getProgress > 0}"> <p th:utext="${cadet.getProgress}+'↑'"></p> </td>
+            <td  class="down" th:if="${cadet.getProgress < 0}" > <p th:utext="${cadet.getProgress}+'↓'"></p> </td>
 
         </tr>
 
@@ -61,6 +60,7 @@
 
 
 }
+
 :focus, :active{outline: none;}
 a :focus, a :active { outline: none;}
 nav,footer,header,aside{display: block;}
@@ -129,9 +129,7 @@ body {
 .first {
     background-color: #fbb034;
     background-image: linear-gradient( to right , #fbb034 0%, #ffdd00 74%);
- 
-   
-    
+
 
 }
 .second {

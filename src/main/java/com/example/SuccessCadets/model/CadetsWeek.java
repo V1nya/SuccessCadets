@@ -1,23 +1,24 @@
 package com.example.SuccessCadets.model;
 
+
 import javax.persistence.*;
 
 
 @Entity
-@Table(name = "cadets")
-public class Cadet {
+@Table(name = "LoadCadetsWeek")
+public class CadetsWeek {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-      private   String name,gr,course;
-      private   double grade;
-      private   int Position = 0;
+    private   String name,gr,course;
+    private   double grade;
+    private   int startPosition = 0;
 
-    public Cadet() {
+    public CadetsWeek() {
     }
 
-    public Cadet(String name,String group,String course, double grade) {
+    public CadetsWeek(String name, String group, String course, double grade) {
         this.name = name;
         this.gr = group;
         this.course=course;
@@ -40,6 +41,8 @@ public class Cadet {
     public Long getId() {
         return id;
     }
+
+
 
     public String getName() {
         return name;
@@ -65,11 +68,12 @@ public class Cadet {
         this.grade = grade;
     }
 
-    public int getPosition() {
-        return Position;
+    public int getStartPosition() {
+        return startPosition;
     }
 
-    public void setPosition(int position) {
-        Position = position;
+    public void setStartPosition(int startPosition) {
+        this.startPosition = startPosition;
     }
 }
+

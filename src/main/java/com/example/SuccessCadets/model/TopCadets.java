@@ -67,7 +67,4 @@ public class TopCadets {
         return id_top;
     }
 
-    public void setId(Long id) {
-        this.id_top = id;
-    }
 }

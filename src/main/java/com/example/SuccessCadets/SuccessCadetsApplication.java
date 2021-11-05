@@ -9,6 +9,8 @@ public class SuccessCadetsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SuccessCadetsApplication.class, args);
 		System.out.println();
+
 	}
 
 }
+
